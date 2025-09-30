@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as branchService from "../services/branchService";
 import { Branch } from "../../../data/branches";
-import { json } from "stream/consumers";
 
 export const getAllBranches = async (
     req: Request,
@@ -12,7 +11,7 @@ export const getAllBranches = async (
     try {
         const branches: Branch[] = await branchService.getAllBranches();
         res.status(HTTP_STATUS.OK).json({
-            message: "Items retrieved successfully",
+            message: "Branches retrieved successfully",
             data: branches,
         });
     } catch (error: unknown) {
