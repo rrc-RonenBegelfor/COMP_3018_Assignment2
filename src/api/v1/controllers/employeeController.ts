@@ -70,7 +70,7 @@ import * as employeeService from "../services/employeeService";
  ): Promise<void> => {
      try {
          const { id } = req.params;
-         const parsedId = parseInt( id, 10);
+         const parsedId = parseInt(id, 10);
  
          const employee = await employeeService.getEmployeeById(parsedId);
  
@@ -96,7 +96,7 @@ import * as employeeService from "../services/employeeService";
  ): Promise<void> => {
      try {
          const { id } = req.params;
-         const parsedId = parseInt( id, 10);
+         const parsedId = parseInt(id, 10);
  
          const { name, position, department, email, phone, branchId} = req.body;
  
@@ -118,7 +118,7 @@ import * as employeeService from "../services/employeeService";
  ): Promise<void> => {
      try {
          const  { id } = req.params;
-        const parsedId = parseInt( id, 10);
+        const parsedId = parseInt(id, 10);
  
          await employeeService.deleteEmployee(parsedId);
  
@@ -137,7 +137,7 @@ export const getAllEmployeesForBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt( id, 10);
+        const parsedId = parseInt(id, 10);
         
         const employees = await employeeService.getAllEmployeesForBranch(parsedId);
 

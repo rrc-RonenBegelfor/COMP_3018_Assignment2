@@ -58,7 +58,7 @@ export const getBranchById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt( id, 10);
+        const parsedId = parseInt(id, 10);
 
         const branch = await branchService.getBranchById(parsedId);
 
@@ -84,7 +84,7 @@ export const updateBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt( id, 10);
+        const parsedId = parseInt(id, 10);
 
         const { name, address, phone} = req.body;
 
@@ -106,7 +106,7 @@ export const deleteBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt( id, 10);
+        const parsedId = parseInt(id, 10);
 
         await branchService.deleteBranch(parsedId);
 
