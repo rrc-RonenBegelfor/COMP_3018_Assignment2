@@ -3,6 +3,14 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
  import { Employee } from "../../../data/employees";
 
+ /**
+ * Controller to get all employees.
+ * Responds with a list of all employee objects.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
  export const getAllEmployees = async (
     req: Request,
     res: Response,
@@ -19,6 +27,14 @@ import * as employeeService from "../services/employeeService";
     }
  };
  
+/**
+ * Controller to create a new employee.
+ * Validates request body and creates an employee if valid.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const createEmployee = async (
     req: Request,
     res: Response,
@@ -62,7 +78,15 @@ export const createEmployee = async (
         next(error);
     }
 };
- 
+
+/**
+ * Controller to get an employee by their ID.
+ * Responds with the employee object if found.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const getEmployeeById = async (
     req: Request,
     res: Response,
@@ -88,7 +112,15 @@ export const getEmployeeById = async (
          next(error);
     }
 };
- 
+
+/**
+ * Controller to update an employee by their ID.
+ * Updates employee details and responds with the updated object.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const updateEmployee = async (
     req: Request,
     res: Response,
@@ -110,7 +142,15 @@ export const updateEmployee = async (
         next(error);
     }
 };
- 
+
+/**
+ * Controller to delete an employee by their ID.
+ * Responds with the deleted employee object.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const deleteEmployee = async (
     req: Request,
     res: Response,
@@ -133,6 +173,14 @@ export const deleteEmployee = async (
     }
 };
 
+/**
+ * Controller to get all employees for a specific branch.
+ * Responds with a list of employees belonging to the branch.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const getAllEmployeesForBranch = async (
     req: Request,
     res: Response,
