@@ -117,23 +117,3 @@ export const deleteBranch = async (
         next(error);
     }
 };
-
-export const getAllEmployeesForBranch = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const { id } = req.params;
-        const parsedId = parseInt( id, 10);
-        
-        const employees = await branchService.getAllEmployeesForBranch(parsedId);
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Fetched all employees in requested branch",
-            data: employees,
-        });
-    } catch (error: unknown) {
-        next(error);
-    }
-};
