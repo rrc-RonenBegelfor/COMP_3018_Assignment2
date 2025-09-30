@@ -25,7 +25,7 @@ export const createBranch = async (branchData: {
 
 export const getBranchById = async (id: number): Promise<Branch | undefined> => {
     return branches.find(b => b.id === id);
-}
+};
 
 export const updateBranch = async (
     id: number,
