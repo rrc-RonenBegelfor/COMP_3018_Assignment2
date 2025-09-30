@@ -98,9 +98,9 @@ import * as employeeService from "../services/employeeService";
          const { id } = req.params;
          const parsedId = parseInt( id, 10);
  
-         const { name, address, phone} = req.body;
+         const { name, position, department, email, phone, branchId} = req.body;
  
-         const updatedEmployee: Employee = await employeeService.updateEmployee(parsedId, { name, address, phone});
+         const updatedEmployee: Employee = await employeeService.updateEmployee(parsedId, { name, position, department, email, phone, branchId});
  
          res.status(HTTP_STATUS.OK).json({
              message: "Employee updated successfully",
@@ -117,9 +117,10 @@ import * as employeeService from "../services/employeeService";
      next: NextFunction
  ): Promise<void> => {
      try {
-         const id: string = req.params.id;
+         const  { id } = req.params;
+        const parsedId = parseInt( id, 10);
  
-         await employeeService.deleteEmployee(id);
+         await employeeService.deleteEmployee(parsedId);
  
          res.status(HTTP_STATUS.OK).json({
              message: "Employee deleted successfully",
