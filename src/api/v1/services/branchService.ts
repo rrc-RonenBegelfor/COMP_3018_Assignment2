@@ -1,9 +1,20 @@
 import { branches, Branch} from "../../../data/branches";
 
+/**
+ * Gets all branches.
+ * 
+ * @returns A promise that resolves to an array of Branch objects.
+ */
 export const getAllBranches = async (): Promise<Branch[]> => {
     return structuredClone(branches);
 };
 
+/**
+ * Creates a new branch with the provided details.
+ * 
+ * @param branchData - An object containing the details of the branch to be created.
+ * @returns A promise that resolves to the newly created Branch object.
+ */
 export const createBranch = async (branchData: {
     name: string;
     address: string;
@@ -23,10 +34,24 @@ export const createBranch = async (branchData: {
     return structuredClone(newEmployee);
 };
 
+/**
+ * Gets a branch by its ID.
+ * 
+ * @param id - The ID of the branch to retrieve.
+ * @returns A promise that resolves to the Branch object if found, otherwise undefined.
+ */
 export const getBranchById = async (id: number): Promise<Branch | undefined> => {
     return branches.find(b => b.id === id);
 };
 
+/**
+ * Updates a branch by its ID with the provided details.
+ * 
+ * @param id - The ID of the branch to update
+ * @param branchData - The data to update the branch with
+ * @returns - The updated Branch object
+ * @throws - An error if the branch with the specified ID is not found
+ */
 export const updateBranch = async (
     id: number,
     branchData: Pick<Branch, "name" | "address" | "phone">,
@@ -45,6 +70,13 @@ export const updateBranch = async (
     return structuredClone(branches[index]);
 };
 
+/**
+ * Deletes a branch by its ID.
+ * 
+ * @param id - The ID of the branch to delete
+ * @returns - A promise that resolves when the branch is deleted
+ * @throws - An error if the branch with the specified ID is not found
+ */
 export const deleteBranch = async (id: number): Promise<void> => {
     const index: number = branches.findIndex((b: Branch) => b.id === id);
 
