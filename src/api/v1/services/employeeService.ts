@@ -30,7 +30,7 @@ export const createEmployee = async (employeeData: {
         name: employeeData.name,
         position: employeeData.position,
         department: employeeData.department,
-        email: employeeData.phone,
+        email: employeeData.email,
         phone: employeeData.phone,
         branchId: employeeData.branchId,
     };
