@@ -3,13 +3,15 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
  import { Employee } from "../../../data/employees";
 
- /**
+/**
  * Controller to get all employees.
  * Responds with a list of all employee objects.
  * 
  * @param req - The express Request
  * @param res - The express Response
  * @param next - The express middleware chaining function
+ * 
+ * Added functionality to filter by department if a query parameter is provided.
  */
  export const getAllEmployees = async (
     req: Request,
@@ -17,7 +19,16 @@ import * as employeeService from "../services/employeeService";
     next: NextFunction
  ): Promise<void> => {
     try {
-        const employees: Employee[] = await employeeService.getAllEmployees();
+        const { department } = req.query;
+
+        let employees: Employee[];
+        
+        if (typeof department === "string") {
+            employees = await employeeService.getAllEmployeesForDepartment(department);
+        } else {    
+            employees = await employeeService.getAllEmployees();
+        }
+
         res.status(HTTP_STATUS.OK).json({
             message: "Employees retrieved successfully",
             data: employees,
@@ -194,34 +205,6 @@ export const getAllEmployeesForBranch = async (
 
         res.status(HTTP_STATUS.OK).json({
             message: "Fetched all employees from requested branch",
-            data: employees,
-        });
-    } catch (error: unknown) {
-        next(error);
-    }
-};
-
-/**
- * Controller to get all employees for a specific department.
- * Responds with a list of employees belonging to the department.
- * 
- * @param req - The express Request
- * @param res - The express Response
- * @param next - The express middleware chaining function
- */
-export const getAllEmployeesForDepartment = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-): Promise<void> => {
-    try {
-        const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
-        
-        const employees = await employeeService.getAllEmployeesForDepartment(parsedId);
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Fetched all employees from requested department",
             data: employees,
         });
     } catch (error: unknown) {

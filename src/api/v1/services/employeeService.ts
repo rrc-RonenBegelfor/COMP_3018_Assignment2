@@ -64,3 +64,7 @@ export const deleteEmployee = async (id: number): Promise<void> => {
 export const getAllEmployeesForBranch = async (branchId: number): Promise<Employee[]> => {
     return employees.filter(e => e.branchId === branchId);
 };
+
+export const getAllEmployeesForDepartment = async (department: string): Promise<Employee[]> => {
+    return employees.filter(e => e.department.toLowerCase() === department.toLowerCase());
+}
