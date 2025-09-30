@@ -86,9 +86,9 @@ export const updateBranch = async (
         const { id } = req.params;
         const parsedId = parseInt(id, 10);
 
-        const { name, address, phone} = req.body;
+        const { name, address, phone } = req.body;
 
-        const updatedBranch: Branch = await branchService.updateBranch(parsedId, { name, address, phone});
+        const updatedBranch: Branch = await branchService.updateBranch(parsedId, { name, address, phone });
 
         res.status(HTTP_STATUS.OK).json({
             message: "Branch updated successfully",
@@ -106,12 +106,15 @@ export const deleteBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
+
+        const deletedBranch: Branch | undefined = await branchService.getBranchById(parsedId);
 
         await branchService.deleteBranch(parsedId);
 
         res.status(HTTP_STATUS.OK).json({
             message: "Branch deleted successfully",
+            data: deletedBranch,
         });
     } catch (error: unknown) {
         next(error);

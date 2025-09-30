@@ -1,3 +1,6 @@
+/*
+Represents an employee in the system.
+*/
 export interface Employee {
     id: number;
     name: string;

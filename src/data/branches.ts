@@ -1,3 +1,6 @@
+/*
+Represents a branch in the system.
+*/
 export interface Branch {
     id: number;
     name: string;

@@ -1,6 +1,8 @@
 /*
 There was no mention of having to add constants, but I did so as I think
 it was mentioned that it is good practice.
+
+Added note later on: It was in the rubric I guess.
 */
 
 export const HTTP_STATUS = {

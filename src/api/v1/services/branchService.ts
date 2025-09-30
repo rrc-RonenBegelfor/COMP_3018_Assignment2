@@ -9,7 +9,7 @@ export const createBranch = async (branchData: {
     address: string;
     phone: string;
 }): Promise<Branch> => {
-    const uniqueId = Math.max(0, ...branches.map(b => b.id)) + 1;
+    const uniqueId: number = Math.max(0, ...branches.map(b => b.id)) + 1;
 
     const newEmployee: Branch = {
         id: uniqueId,

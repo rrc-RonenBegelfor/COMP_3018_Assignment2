@@ -4,27 +4,27 @@ import * as employeeService from "../services/employeeService";
  import { Employee } from "../../../data/employees";
 
  export const getAllEmployees = async (
-     req: Request,
-     res: Response,
-     next: NextFunction
+    req: Request,
+    res: Response,
+    next: NextFunction
  ): Promise<void> => {
-     try {
-         const employees: Employee[] = await employeeService.getAllEmployees();
-         res.status(HTTP_STATUS.OK).json({
-             message: "Employees retrieved successfully",
-             data: employees,
-         });
-     } catch (error: unknown) {
-         next(error);
-     }
+    try {
+        const employees: Employee[] = await employeeService.getAllEmployees();
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employees retrieved successfully",
+            data: employees,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
  };
  
- export const createEmployee = async (
-     req: Request,
-     res: Response,
-     next: NextFunction
- ): Promise<void> => {
-     try {
+export const createEmployee = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
         if (!req.body.name) {
             res.status(HTTP_STATUS.BAD_REQUEST).json({
                 message: "Employee name is required",
@@ -57,78 +57,81 @@ import * as employeeService from "../services/employeeService";
                 message: "Employee successfully added",
                 data: newEmployee,
             });
-         }
-     } catch (error: unknown) {
-         next(error);
-     }
- };
+        }
+    } catch (error: unknown) {
+        next(error);
+    }
+};
  
- export const getEmployeeById = async (
-     req: Request,
-     res: Response,
-     next: NextFunction
- ): Promise<void> => {
-     try {
-         const { id } = req.params;
-         const parsedId = parseInt(id, 10);
- 
-         const employee = await employeeService.getEmployeeById(parsedId);
- 
-         if (!employee) {
-             res.status(HTTP_STATUS.NOT_FOUND).json({
-                 message: "Employee not found"
-             });
-         } else {
-             res.status(HTTP_STATUS.OK).json({
-                 message: "Employee fetched",
-                 data: employee,
-             });
-         }
-     } catch (error: unknown) {
-         next(error);
-     }
- };
- 
- export const updateEmployee = async (
-     req: Request,
-     res: Response,
-     next: NextFunction
- ): Promise<void> => {
-     try {
-         const { id } = req.params;
-         const parsedId = parseInt(id, 10);
- 
-         const { name, position, department, email, phone, branchId} = req.body;
- 
-         const updatedEmployee: Employee = await employeeService.updateEmployee(parsedId, { name, position, department, email, phone, branchId});
- 
-         res.status(HTTP_STATUS.OK).json({
-             message: "Employee updated successfully",
-             data: updatedEmployee,
-         });
-     } catch (error: unknown) {
-         next(error);
-     }
- };
- 
- export const deleteEmployee = async (
-     req: Request,
-     res: Response,
-     next: NextFunction
- ): Promise<void> => {
-     try {
-         const  { id } = req.params;
+export const getEmployeeById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { id } = req.params;
         const parsedId = parseInt(id, 10);
  
-         await employeeService.deleteEmployee(parsedId);
+        const employee = await employeeService.getEmployeeById(parsedId);
  
-         res.status(HTTP_STATUS.OK).json({
-             message: "Employee deleted successfully",
-         });
-     } catch (error: unknown) {
+        if (!employee) {
+            res.status(HTTP_STATUS.NOT_FOUND).json({
+                message: "Employee not found"
+            });
+        } else {
+            res.status(HTTP_STATUS.OK).json({
+                message: "Employee fetched",
+                data: employee,
+            });
+        }
+    } catch (error: unknown) {
          next(error);
-     }
- };
+    }
+};
+ 
+export const updateEmployee = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const parsedId = parseInt(id, 10);
+
+        const { name, position, department, email, phone, branchId } = req.body;
+
+        const updatedEmployee: Employee = await employeeService.updateEmployee(parsedId, { name, position, department, email, phone, branchId });
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employee updated successfully",
+            data: updatedEmployee,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
+ 
+export const deleteEmployee = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const  { id } = req.params;
+        const parsedId = parseInt(id, 10);
+
+        const deletedEmployee: Employee | undefined = await employeeService.getEmployeeById(parsedId);  
+
+        await employeeService.deleteEmployee(parsedId);       
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Employee deleted successfully",
+            data: deletedEmployee,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
 
 export const getAllEmployeesForBranch = async (
     req: Request,
@@ -137,7 +140,7 @@ export const getAllEmployeesForBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
         
         const employees = await employeeService.getAllEmployeesForBranch(parsedId);
 

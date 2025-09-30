@@ -12,7 +12,7 @@ export const createEmployee = async (employeeData: {
     phone: string;
     branchId: number;
 }): Promise<Employee> => {
-    const uniqueId = Math.max(0, ...employees.map(b => b.id)) + 1;
+    const uniqueId: number = Math.max(0, ...employees.map(b => b.id)) + 1;
 
     const newEmployee: Employee = {
         id: uniqueId,
@@ -37,7 +37,7 @@ export const updateEmployee = async (
     id: number,
     employeeData: Pick<Employee, "name" | "position" | "department" | "email" | "phone" | "branchId">,
 ): Promise<Employee> => {
-    const index: number = employees.findIndex((b: Employee) => b.id === id);
+    const index: number = employees.findIndex((e: Employee) => e.id === id);
 
     if (index === -1) {
         throw new Error(`Item with ID ${id} not found`);
@@ -52,7 +52,7 @@ export const updateEmployee = async (
 };
 
 export const deleteEmployee = async (id: number): Promise<void> => {
-    const index: number = employees.findIndex((b: Employee) => b.id === id);
+    const index: number = employees.findIndex((e: Employee) => e.id === id);
 
     if (index === -1) {
         throw new Error(`Item with ID ${id} not found`);
