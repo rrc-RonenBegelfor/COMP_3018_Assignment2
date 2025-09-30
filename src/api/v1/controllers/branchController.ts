@@ -105,9 +105,10 @@ export const deleteBranch = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const id: string = req.params.id;
+        const { id } = req.params;
+        const parsedId = parseInt( id, 10);
 
-        await branchService.deleteBranch(id);
+        await branchService.deleteBranch(parsedId);
 
         res.status(HTTP_STATUS.OK).json({
             message: "Branch deleted successfully",

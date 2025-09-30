@@ -128,3 +128,23 @@ import * as employeeService from "../services/employeeService";
          next(error);
      }
  };
+
+export const getAllEmployeesForBranch = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const parsedId = parseInt( id, 10);
+        
+        const employees = await employeeService.getAllEmployeesForBranch(parsedId);
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Fetched all employees from requested branch",
+            data: employees,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
