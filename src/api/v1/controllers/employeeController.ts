@@ -200,3 +200,31 @@ export const getAllEmployeesForBranch = async (
         next(error);
     }
 };
+
+/**
+ * Controller to get all employees for a specific department.
+ * Responds with a list of employees belonging to the department.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
+export const getAllEmployeesForDepartment = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const parsedId: number = parseInt(id, 10);
+        
+        const employees = await employeeService.getAllEmployeesForDepartment(parsedId);
+
+        res.status(HTTP_STATUS.OK).json({
+            message: "Fetched all employees from requested department",
+            data: employees,
+        });
+    } catch (error: unknown) {
+        next(error);
+    }
+};
