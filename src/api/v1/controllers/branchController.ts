@@ -3,6 +3,14 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as branchService from "../services/branchService";
 import { Branch } from "../../../data/branches";
 
+/**
+ * Controller to get all branches.
+ * Responds with a list of all branch objects.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const getAllBranches = async (
     req: Request,
     res: Response,
@@ -19,6 +27,14 @@ export const getAllBranches = async (
     }
 };
 
+/**
+ * Controller to create a new branch.
+ * Validates request body and creates a branch if valid.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const createBranch = async (
     req: Request,
     res: Response,
@@ -51,6 +67,14 @@ export const createBranch = async (
     }
 };
 
+/**
+ * Controller to get a branch by its ID.
+ * Responds with the branch object if found.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const getBranchById = async (
     req: Request,
     res: Response,
@@ -77,6 +101,14 @@ export const getBranchById = async (
     }
 };
 
+/**
+ * Controller to update a branch by its ID.
+ * Updates branch details and responds with the updated object.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const updateBranch = async (
     req: Request,
     res: Response,
@@ -99,6 +131,14 @@ export const updateBranch = async (
     }
 };
 
+/**
+ * Controller to delete a branch by its ID.
+ * Responds with the deleted branch object.
+ * 
+ * @param req - The express Request
+ * @param res - The express Response
+ * @param next - The express middleware chaining function
+ */
 export const deleteBranch = async (
     req: Request,
     res: Response,
