@@ -14,6 +14,8 @@ export const getAllEmployees = async (): Promise<Employee[]> => {
  * 
  * @param employeeData - An object containing the details of the employee to be created.
  * @returns A promise that resolves to the newly created Employee object.
+ * 
+ * Added functionality that helps create a unique ID number using mapping.
  */
 export const createEmployee = async (employeeData: {
     name: string;
@@ -23,7 +25,13 @@ export const createEmployee = async (employeeData: {
     phone: string;
     branchId: number;
 }): Promise<Employee> => {
-    const uniqueId: number = Math.max(0, ...employees.map(b => b.id)) + 1;
+    const existingIds: Set<number> = new Set(employees.map(e => e.id));
+
+    let uniqueId: number = 1;
+
+    while(existingIds.has(uniqueId)) {
+        uniqueId++;
+    }
 
     const newEmployee: Employee = {
         id: uniqueId,
