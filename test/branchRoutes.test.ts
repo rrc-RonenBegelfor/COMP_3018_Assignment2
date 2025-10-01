@@ -1,4 +1,5 @@
 import request from "supertest";
+import response from "supertest";
 import app from "../src/app";
 import * as branchController from "../src/api/v1/controllers/branchController";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
@@ -28,7 +29,7 @@ describe("Branch Routs", () => {
                return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({}); 
             });
 
-            const response = await request(app).get("/api/v1/branches/");
+            const response: response.Response = await request(app).get("/api/v1/branches/");
             expect(response.status).toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
         });
     });
@@ -51,7 +52,7 @@ describe("Branch Routs", () => {
                return res.status(HTTP_STATUS.BAD_REQUEST).send({}); 
             });
 
-            const response = await request(app).post("/api/v1/branches/");
+            const response: response.Response = await request(app).post("/api/v1/branches/");
             expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
         });
     });
@@ -74,7 +75,7 @@ describe("Branch Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/branches/-1");
+            const response: response.Response = await request(app).put("/api/v1/branches/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -91,7 +92,7 @@ describe("Branch Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/branches/-1");
+            const response: response.Response = await request(app).put("/api/v1/branches/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -108,7 +109,7 @@ describe("Branch Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).get("/api/v1/branches/-1");
+            const response: response.Response = await request(app).get("/api/v1/branches/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });

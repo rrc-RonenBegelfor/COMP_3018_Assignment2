@@ -1,4 +1,5 @@
 import request from "supertest";
+import response from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
@@ -30,7 +31,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({}); 
             });
 
-            const response = await request(app).get("/api/v1/employees/");
+            const response: response.Response = await request(app).get("/api/v1/employees/");
             expect(response.status).toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
         });
     });
@@ -54,7 +55,7 @@ describe("Employee Routs", () => {
             });
 
             // Could add an empty array/object and send as an empty body, both would return '400'.
-            const response = await request(app).post("/api/v1/employees/");
+            const response: response.Response = await request(app).post("/api/v1/employees/");
             expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
         });
     });
@@ -77,7 +78,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/employees/-1");
+            const response: response.Response = await request(app).put("/api/v1/employees/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -94,7 +95,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/employees/-1");
+            const response: response.Response = await request(app).put("/api/v1/employees/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -111,7 +112,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).get("/api/v1/employees/-1");
+            const response: response.Response = await request(app).get("/api/v1/employees/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -128,7 +129,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).get("/api/v1/employees?department=test");
+            const response: response.Response = await request(app).get("/api/v1/employees?department=test");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
