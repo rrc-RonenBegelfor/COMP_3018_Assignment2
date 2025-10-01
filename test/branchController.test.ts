@@ -256,7 +256,7 @@ describe("Branch Controller", () => {
             (branchService.deleteBranch as jest.Mock).mockRejectedValue(mockError);
 
             // Act
-            await branchController.updateBranch(
+            await branchController.deleteBranch(
                 mockReq as Request,
                 mockRes as Response,
                 mockNext as NextFunction

@@ -13,11 +13,11 @@ import * as employeeService from "../services/employeeService";
  * 
  * Added functionality to filter by department if a query parameter is provided.
  */
- export const getAllEmployees = async (
+export const getAllEmployees = async (
     req: Request,
     res: Response,
     next: NextFunction
- ): Promise<void> => {
+): Promise<void> => {
     try {
         const { department } = req.query;
 
@@ -36,7 +36,7 @@ import * as employeeService from "../services/employeeService";
     } catch (error: unknown) {
         next(error);
     }
- };
+};
  
 /**
  * Controller to create a new employee.
@@ -81,7 +81,7 @@ export const createEmployee = async (
  
             const newEmployee: Employee = await employeeService.createEmployee({ name, position, department, email, phone, branchId});
             res.status(HTTP_STATUS.CREATED).json({
-                message: "Employee successfully added",
+                message: "Employee created successfully",
                 data: newEmployee,
             });
         }
@@ -198,13 +198,13 @@ export const getAllEmployeesForBranch = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
+        const { branchId } = req.params;
+        const parsedId: number = parseInt(branchId, 10);
         
         const employees = await employeeService.getAllEmployeesForBranch(parsedId);
 
         res.status(HTTP_STATUS.OK).json({
-            message: "Fetched all employees from requested branch",
+            message: `Fetched all employees from requested branch, branch ID ${parsedId}`,
             data: employees,
         });
     } catch (error: unknown) {
