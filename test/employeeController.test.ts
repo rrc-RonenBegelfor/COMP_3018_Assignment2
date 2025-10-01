@@ -92,7 +92,7 @@ describe("Employee Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (employeeService.getAllEmployees as jest.Mock).mockRejectedValue(mockError);
 
@@ -205,7 +205,7 @@ describe("Employee Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (employeeService.updateEmployee as jest.Mock).mockRejectedValue(mockError);
 
@@ -246,7 +246,7 @@ describe("Employee Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (employeeService.deleteEmployee as jest.Mock).mockRejectedValue(mockError);
 
@@ -353,7 +353,7 @@ describe("Employee Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (employeeService.getAllEmployeesForBranch as jest.Mock).mockRejectedValue(mockError);
 

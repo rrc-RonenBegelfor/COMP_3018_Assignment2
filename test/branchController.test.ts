@@ -54,7 +54,7 @@ describe("Branch Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (branchService.getAllBranches as jest.Mock).mockRejectedValue(mockError);
 
@@ -210,7 +210,7 @@ describe("Branch Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (branchService.updateBranch as jest.Mock).mockRejectedValue(mockError);
 
@@ -251,7 +251,7 @@ describe("Branch Controller", () => {
 
         it("should handle an error while also calling next", async () => {
             // Arrange
-            const mockError = new Error("Mock error");
+            const mockError: Error = new Error("Mock error");
 
             (branchService.deleteBranch as jest.Mock).mockRejectedValue(mockError);
 
