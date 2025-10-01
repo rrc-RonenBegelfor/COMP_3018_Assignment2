@@ -15,7 +15,7 @@ export const getAllBranches = async (): Promise<Branch[]> => {
  * @param branchData - An object containing the details of the branch to be created.
  * @returns A promise that resolves to the newly created Branch object.
  * 
- * Added functionality that helps create a unique ID number
+ * Added functionality that helps create a unique ID number using mapping.
  */
 export const createBranch = async (branchData: {
     name: string;
