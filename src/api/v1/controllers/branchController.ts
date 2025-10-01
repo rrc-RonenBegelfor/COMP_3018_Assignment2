@@ -82,9 +82,9 @@ export const getBranchById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
 
-        const branch = await branchService.getBranchById(parsedId);
+        const branch: Branch | undefined = await branchService.getBranchById(parsedId);
 
         if (!branch) {
             res.status(HTTP_STATUS.NOT_FOUND).json({

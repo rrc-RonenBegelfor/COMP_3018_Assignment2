@@ -113,9 +113,9 @@ export const getEmployeeById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
  
-        const employee = await employeeService.getEmployeeById(parsedId);
+        const employee: Employee | undefined = await employeeService.getEmployeeById(parsedId);
  
         if (!employee) {
             res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -147,7 +147,7 @@ export const updateEmployee = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
 
         const { name, position, department, email, phone, branchId } = req.body;
 
@@ -177,7 +177,7 @@ export const deleteEmployee = async (
 ): Promise<void> => {
     try {
         const  { id } = req.params;
-        const parsedId = parseInt(id, 10);
+        const parsedId: number = parseInt(id, 10);
 
         const deletedEmployee: Employee | undefined = await employeeService.getEmployeeById(parsedId);  
 
