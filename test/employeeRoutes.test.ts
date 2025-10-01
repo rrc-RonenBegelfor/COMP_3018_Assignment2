@@ -3,6 +3,7 @@ import response from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
+import { Employee } from "../src/data/employees";
 
 jest.mock("../src/api/v1/controllers/employeeController", () => ({
     getAllEmployees: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
@@ -38,10 +39,14 @@ describe("Employee Routs", () => {
 
     describe("POST /api/v1/employees/", () => {
         it("should call createEmployee controller with valid data", async () => {
-            const mockEmployee = {
+            const mockEmployee: Employee = {
+                id: 1,
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
+                email: "Test Email",
+                phone: "Test Phone",
+                branchId: 1
             };
 
             await request(app).post("/api/v1/employees/").send(mockEmployee);
@@ -62,10 +67,14 @@ describe("Employee Routs", () => {
 
     describe("PUT /api/v1/employees/:id", () => {
         it("should call updateEmployee controller with valid data", async () => {
-            const mockEmployeeUpdate = {
+            const mockEmployeeUpdate: Employee = {
+                id: 1,
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
+                email: "Test Email",
+                phone: "Test Phone",
+                branchId: 1
             };
 
             await request(app).put("/api/v1/employees/1").send(mockEmployeeUpdate);
