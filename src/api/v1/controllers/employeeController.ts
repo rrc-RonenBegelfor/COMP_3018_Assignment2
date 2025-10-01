@@ -25,6 +25,14 @@ export const getAllEmployees = async (
         
         if (typeof department === "string") {
             employees = await employeeService.getAllEmployeesForDepartment(department);
+
+            // Had to add this in so my route test would work properly.
+            if (employees.length === 0) {
+                res.status(HTTP_STATUS.BAD_REQUEST).json({
+                    department: department,
+                    message: `The department above was not found or does not exist`,
+                });
+            }
         } else {    
             employees = await employeeService.getAllEmployees();
         }
