@@ -12,7 +12,7 @@ import * as employeeService from "../services/employeeService";
  * @param next - The express middleware chaining function
  * 
  * Added functionality to filter by department if a query parameter is provided.
- */
+*/
 export const getAllEmployees = async (
     req: Request,
     res: Response,
