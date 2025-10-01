@@ -21,6 +21,16 @@ describe("Branch Routs", () => {
             await request(app).get("/api/v1/branches/");
             expect(branchController.getAllBranches).toHaveBeenCalled();
         });
+
+        it("should call getAllBranches and handle failure", async () => {
+
+            (branchController.getAllBranches as jest.Mock).mockImplementation((req, res) => {
+               return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({}); 
+            });
+
+            const response = await request(app).get("/api/v1/branches/");
+            expect(response.status).toBe(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+        });
     });
 
     describe("POST /api/v1/branches/", () => {
@@ -33,6 +43,16 @@ describe("Branch Routs", () => {
 
             await request(app).post("/api/v1/branches/").send(mockBranch);
             expect(branchController.createBranch).toHaveBeenCalled();
+        });
+
+        it("should call createBranch and handle failure", async () => {
+
+            (branchController.createBranch as jest.Mock).mockImplementation((req, res) => {
+               return res.status(HTTP_STATUS.BAD_REQUEST).send({}); 
+            });
+
+            const response = await request(app).post("/api/v1/branches/");
+            expect(response.status).toBe(HTTP_STATUS.BAD_REQUEST);
         });
     });
 
@@ -47,6 +67,16 @@ describe("Branch Routs", () => {
             await request(app).put("/api/v1/branches/1").send(mockBranchUpdate);
             expect(branchController.updateBranch).toHaveBeenCalled();
         });
+
+        it("should call updateBranch and handle failure", async () => {
+
+            (branchController.updateBranch as jest.Mock).mockImplementation((req, res) => {
+               return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
+            });
+
+            const response = await request(app).put("/api/v1/branches/-1");
+            expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
+        });
     });
 
     describe("DELETE /api/v1/branches/:id", () => {
@@ -54,12 +84,32 @@ describe("Branch Routs", () => {
             await request(app).delete("/api/v1/branches/1");
             expect(branchController.deleteBranch).toHaveBeenCalled();
         });
+
+        it("should call deleteBranch and handle failure", async () => {
+
+            (branchController.updateBranch as jest.Mock).mockImplementation((req, res) => {
+               return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
+            });
+
+            const response = await request(app).put("/api/v1/branches/-1");
+            expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
+        });
     });
 
     describe("GET /api/v1/branches/:id", () => {
         it("shoud call getBranchById controller with provided ID", async () => {
             await request(app).get("/api/v1/branches/1");
             expect(branchController.getBranchById).toHaveBeenCalled();
+        });
+
+        it("should call getBranchById and handle failure", async () => {
+
+            (branchController.getBranchById as jest.Mock).mockImplementation((req, res) => {
+               return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
+            });
+
+            const response = await request(app).get("/api/v1/branches/-1");
+            expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
 });

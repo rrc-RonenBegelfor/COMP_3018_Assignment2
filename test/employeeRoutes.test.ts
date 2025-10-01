@@ -111,7 +111,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/employees/-1");
+            const response = await request(app).get("/api/v1/employees/-1");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
@@ -128,7 +128,7 @@ describe("Employee Routs", () => {
                return res.status(HTTP_STATUS.NOT_FOUND).send({}); 
             });
 
-            const response = await request(app).put("/api/v1/employees?department=test");
+            const response = await request(app).get("/api/v1/employees?department=test");
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
         });
     });
