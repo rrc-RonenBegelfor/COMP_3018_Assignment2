@@ -225,4 +225,98 @@ describe("Branch Controller", () => {
             expect(mockNext).toHaveBeenCalledWith(mockError);
         });
     });
+
+    describe("deleteBranch", () => {
+        it("should successfully delete mock data", async () => {
+            // Arrange
+            const mockId: string =  "1";
+            mockReq.params = { id: mockId };
+
+            (branchService.deleteBranch as jest.Mock).mockReturnValue(undefined);
+
+            // Act
+            await branchController.deleteBranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Branch deleted successfully",
+                data: undefined,
+            });
+        });
+
+        it("should handle an error while also calling next", async () => {
+            // Arrange
+            const mockError = new Error("Mock error");
+
+            (branchService.deleteBranch as jest.Mock).mockRejectedValue(mockError);
+
+            // Act
+            await branchController.updateBranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockNext).toHaveBeenCalledWith(mockError);
+        });
+    });
+
+    describe("getBranchById", () => {
+        it("should fetch branch based on id", async () => {
+            // Arrange
+            const mockId: string = "1";
+            const mockBranch: Branch = {
+                id: 1,
+                name: "Test",
+                address: "Test",
+                phone: "Test",
+            };
+
+            mockReq.params = { id: mockId };
+
+            (branchService.getBranchById as jest.Mock).mockResolvedValue(mockBranch);
+
+            // Act
+            await branchController.getBranchById(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Branch fetched",
+                data: mockBranch,
+            });
+        });
+
+        it("should return message that branch was not found", async () => {
+            // Arrange
+            const mockId: string = "1";
+
+            mockReq.params = { id: mockId};
+
+            (branchService.getBranchById as jest.Mock).mockResolvedValue(undefined);
+
+            // Act
+            await branchController.getBranchById(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.NOT_FOUND);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Branch not found",
+            });
+        });
+    });
 });
