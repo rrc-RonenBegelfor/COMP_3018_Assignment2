@@ -173,4 +173,56 @@ describe("Branch Controller", () => {
             }); 
         });
     });
+
+    describe("updateBranch", () => {
+        it("should update a branch successfully", async () => {
+            // Arrange
+            const mockBody = {
+                name: "Test",
+            };
+
+            const mockId: string = "1";
+            const mockBranch: Branch = {
+                id: 1,
+                name: "Test",
+                address: "Test",
+                phone: "Test",
+            };
+
+            mockReq.params = { id: mockId };
+            mockReq.body = mockBody;
+            (branchService.updateBranch as jest.Mock).mockReturnValue(mockBranch);
+
+            // Act
+            await branchController.updateBranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                message: "Branch updated successfully",
+                data: mockBranch,
+            });
+        });
+
+        it("should handle an error while also calling next", async () => {
+            // Arrange
+            const mockError = new Error("Mock error");
+
+            (branchService.updateBranch as jest.Mock).mockRejectedValue(mockError);
+
+            // Act
+            await branchController.updateBranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockNext).toHaveBeenCalledWith(mockError);
+        });
+    });
 });
