@@ -1,15 +1,7 @@
 /*
 Represents an employee in the system.
 */
-export interface Employee {
-    id: number;
-    name: string;
-    position: string;
-    department: string;
-    email: string;
-    phone: string;
-    branchId: number;
-};
+import { Employee } from "../api/v1/models/employeeModel";
 
 export const employees: Employee[] = [
     {

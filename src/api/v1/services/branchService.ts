@@ -1,4 +1,5 @@
-import { branches, Branch} from "../../../data/branches";
+import { branches} from "../../../data/branches";
+import { Branch } from "../models/branchModel";
 
 /**
  * Gets all branches.

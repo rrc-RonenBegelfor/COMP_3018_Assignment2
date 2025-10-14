@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as branchService from "../services/branchService";
-import { Branch } from "../../../data/branches";
+import { Branch } from "../models/branchModel";
 
 /**
  * Controller to get all branches.

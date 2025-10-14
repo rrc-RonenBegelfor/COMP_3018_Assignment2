@@ -1,5 +1,5 @@
-import { employees, Employee} from "../../../data/employees";
-
+import { employees} from "../../../data/employees";
+import { Employee } from "../models/employeeModel";
 /**
  * Gets all employees.
  * 
