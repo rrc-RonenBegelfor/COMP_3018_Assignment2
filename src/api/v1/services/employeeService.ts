@@ -172,7 +172,23 @@ export const deleteEmployee = async (id: string): Promise<void> => {
  * @returns A promise that resolves to an array of Employee objects associated with the specified branch ID.
  */
 export const getAllEmployeesForBranch = async (branchId: number): Promise<Employee[]> => {
-    return employees.filter(e => e.branchId === branchId);
+    try {
+        const snapshot: QuerySnapshot = await getDocuments(collection);
+        const employees: Employee[] = snapshot.docs.map((doc) => {
+            const data: DocumentData = doc.data();
+            return {
+                id: doc.id,
+                ...data,
+            } as Employee;
+        });
+
+        const filteredEmployees = employees.filter(e => e.branchId === branchId);
+
+        return filteredEmployees;
+    } catch (error: unknown) {
+        throw error;
+    }
+
 };
 
 /**
