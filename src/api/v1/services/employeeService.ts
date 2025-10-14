@@ -103,21 +103,45 @@ export const getEmployeeById = async (id: string): Promise<Employee> => {
  * @throws - An error if the employee with the specified ID is not found
  */
 export const updateEmployee = async (
-    id: number,
+    id: string,
     employeeData: Pick<Employee, "name" | "position" | "department" | "email" | "phone" | "branchId">,
 ): Promise<Employee> => {
-    const index: number = employees.findIndex((e: Employee) => e.id === id);
+    try {
+        const employee: Employee = await getEmployeeById(id);
 
-    if (index === -1) {
-        throw new Error(`Item with ID ${id} not found`);
+        if (!employee) {
+            throw new Error(`Employee with ${id} not found`);
+        }
+
+        const updateEmployee: Employee = {
+            ...employee,
+        };
+
+        if (employeeData.name !== undefined) {
+            updateEmployee.name = employeeData.name;
+        }
+        if (employeeData.position !== undefined) {
+            updateEmployee.position = employeeData.position;
+        }
+        if (employeeData.department !== undefined) {
+            updateEmployee.department = employeeData.department;
+        }
+        if (employeeData.email !== undefined) {
+            updateEmployee.email = employeeData.email;
+        }
+        if (employeeData.phone !== undefined) {
+            updateEmployee.phone = employeeData.phone;
+        }
+        if (employeeData.branchId !== undefined) {
+            updateEmployee.branchId = employeeData.branchId;
+        }
+
+        await updateDocument<Employee>(collection, id, updateEmployee);
+
+        return structuredClone(updateEmployee);
+    } catch (error: unknown) {
+        throw error;
     }
-
-    employees[index] = {
-        ...employees[index],
-        ...employeeData,
-    };
-
-    return structuredClone(employees[index]);
 };
 
 /**
