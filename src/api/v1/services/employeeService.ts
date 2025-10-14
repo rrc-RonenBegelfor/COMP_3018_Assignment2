@@ -1,12 +1,39 @@
-import { employees} from "../../../data/employees";
+import {
+    QuerySnapshot,
+    DocumentData,
+    DocumentSnapshot,
+} from "firebase-admin/firestore";
 import { Employee } from "../models/employeeModel";
+import {
+    createDocument,
+    getDocuments,
+    getDocumentById,
+    updateDocument,
+    deleteDocument,
+} from "../repositories/firestoreRepository";
+
+const collection: string = "employees";
+
 /**
  * Gets all employees.
  * 
  * @returns A promise that resolves to an array of Employee objects.
  */
 export const getAllEmployees = async (): Promise<Employee[]> => {
-    return structuredClone(employees);
+    try {
+            const snapshot: QuerySnapshot = await getDocuments(collection);
+            const employees: Employee[] = snapshot.docs.map((doc) => {
+                const data: DocumentData = doc.data();
+                return {
+                    id: doc.id,
+                    ...data,
+                } as Employee;
+            });
+    
+            return employees;
+        } catch (error: unknown) {
+            throw error;
+        }
 };
 
 /**
