@@ -182,13 +182,12 @@ export const getAllEmployeesForBranch = async (branchId: number): Promise<Employ
             } as Employee;
         });
 
-        const filteredEmployees = employees.filter(e => e.branchId === branchId);
+        const filteredEmployees = employees.filter((e) => e.branchId === branchId);
 
         return filteredEmployees;
     } catch (error: unknown) {
         throw error;
     }
-
 };
 
 /**
@@ -198,5 +197,20 @@ export const getAllEmployeesForBranch = async (branchId: number): Promise<Employ
  * @returns A promise that resolves to an array of Employee objects associated with the specified department.
  */
 export const getAllEmployeesForDepartment = async (department: string): Promise<Employee[]> => {
-    return employees.filter(e => e.department.toLowerCase() === department.toLowerCase());
+    try {
+        const snapshot: QuerySnapshot = await getDocuments(collection);
+        const employees: Employee[] = snapshot.docs.map((doc) => {
+            const data: DocumentData = doc.data();
+            return {
+                id: doc.id,
+                ...data,
+            } as Employee;
+        });
+
+        const filteredEmployees = employees.filter((e) => e.department.toLowerCase() === department.toLowerCase());
+
+        return filteredEmployees;
+    } catch (error: unknown) {
+        throw error;
+    }
 }
