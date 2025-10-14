@@ -14,19 +14,19 @@ export const branchSchemas: {
             name: Joi.string().required().min(3).messages({
                 "string.base": "Branch name must be a type of string",
                 "string.empty": "Branch name cannot be empty",
-                "string.min": `Branch name should have a minimum length of 3`,
+                "string.min": "Branch name should have a minimum length of 3",
                 "any.required": "Branch name is required",
             }),
             address: Joi.string().required().min(3).messages({
                 "string.base": "Branch address must be a type of string",
                 "string.empty": "Branch address cannot be empty",
-                "string.min": `Branch address should have a minimum length of 3`,
+                "string.min": "Branch address should have a minimum length of 3",
                 "any.required": "Branch address is required",
             }),
             phone: Joi.string().required().min(3).messages({
                 "string.base": "Branch phone must be a type of string",
                 "string.empty": "Branch phone cannot be empty",
-                "string.min": `Branch phone should have a minimum length of 3`,
+                "string.min": "Branch phone should have a minimum length of 3",
                 "any.required": "Branch phone is required",
             }),
         }),
@@ -36,17 +36,17 @@ export const branchSchemas: {
             name: Joi.string().min(3).messages({
                 "string.base": "Branch name must be a type of string",
                 "string.empty": "Branch phone cannot be empty",
-                "string.min": `Branch name should have a minimum length of 3`,
+                "string.min": "Branch name should have a minimum length of 3",
             }),
             address: Joi.string().min(3).messages({
                 "string.base": "Branch address must be a type of string",
                 "string.empty": "Branch phone cannot be empty",
-                "string.min": `Branch address should have a minimum length of 3`,
+                "string.min": "Branch address should have a minimum length of 3",
             }),
             phone: Joi.string().min(3).messages({
                 "string.base": "Branch phone must be a type of string",
                 "string.empty": "Branch phone cannot be empty",
-                "string.min": `Branch phone should have a minimum length of 3`,
+                "string.min": "Branch phone should have a minimum length of 3",
             }),
         }).min(1).required().messages({
                 "object.min": "At least one attribute must be changed when updating",
