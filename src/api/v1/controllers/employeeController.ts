@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as employeeService from "../services/employeeService";
 import { Employee } from "../models/employeeModel";
+import { employeeSchemas } from "../validation/employeeValidation";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Controller to get all employees.
@@ -60,39 +62,21 @@ export const createEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        if (!req.body.name) {
+        const { error, value } = employeeSchemas.create.body.validate(req.body, { abortEarly: false});
+
+        if (error) {
             res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee name is required",
+            message: "Validation failed",
+            details: error.details.map(d => d.message),
             });
-        } else if (!req.body.position) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee position is required",
-            });
-        } else if (!req.body.department) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee department is required",
-            });
-        } else if (!req.body.email) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee email is required",
-            });
-        } else if (!req.body.phone) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee phone is required",
-            });
-        } else if (!req.body.branchId) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Employee branchId is required",
-            });
-        } else {
-            const { name, position, department, email, phone, branchId} = req.body;
- 
-            const newEmployee: Employee = await employeeService.createEmployee({ name, position, department, email, phone, branchId});
-            res.status(HTTP_STATUS.CREATED).json({
-                message: "Employee created successfully",
-                data: newEmployee,
-            });
+            
+            return;
         }
+
+        const employee: Employee = value;
+
+        await employeeService.createEmployee({ ...employee });
+        res.status(HTTP_STATUS.OK).json(successResponse("Employee Created"));
     } catch (error: unknown) {
         next(error);
     }
