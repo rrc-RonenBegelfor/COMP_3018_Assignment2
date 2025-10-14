@@ -332,7 +332,7 @@ describe("Branch Controller", () => {
     describe("Joi branch schema validation", () => {
         it("should return what is missing", async () => {
             // Arrange
-            const mockBody = {
+            const mockBody: Branch = {
                 name: "",
                 address: "Te",
                 phone: "Test",

@@ -4,11 +4,11 @@ import { Request, Response, NextFunction } from "express";
 describe("logRequest middleware", () => {
     it("should log request details and then call next", () => {
         // Arrange
-        const mockRequest = {
+        const mockRequest: Request = {
             method: "POST",
         } as Request;
 
-        const mockResponse = {} as Response;
+        const mockResponse: Response = {} as Response;
         const mockNext: NextFunction = jest.fn();
 
         // Act

@@ -1,7 +1,11 @@
-import Joi from "joi";
+import Joi, { ObjectSchema } from "joi";
 import { EmployeeRequestModel } from "../models/employeeRequestModel";
 
-export const employeeSchemas = {
+export const employeeSchemas: {
+  create: {
+    body: ObjectSchema<EmployeeRequestModel>;
+  };
+} = {
     create: {
         body: Joi.object<EmployeeRequestModel>({
             name: Joi.string().required().min(3).messages({

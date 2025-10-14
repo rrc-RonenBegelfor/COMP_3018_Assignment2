@@ -111,7 +111,7 @@ describe("Employee Controller", () => {
     describe("createEmployee", () => {
         it("should handle a successful creation", async () => {
             // Arrange
-            const mockBody = {
+            const mockBody: Employee = {
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
@@ -390,7 +390,7 @@ describe("Employee Controller", () => {
     describe("Joi employee schema validation", () => {
         it("should return what is missing", async () => {
             // Arrange
-            const mockBody = {
+            const mockBody: Employee = {
                 name: "",
                 position: "Te",
                 department: "Test",

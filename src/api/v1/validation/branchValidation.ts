@@ -1,7 +1,11 @@
-import Joi from "joi";
+import Joi, { ObjectSchema } from "joi";
 import { BranchRequestModel } from "../models/branchRequestModel";
 
-export const branchSchemas = {
+export const branchSchemas: {
+    create: {
+        body: ObjectSchema<BranchRequestModel>;
+    };
+} = {
     create: {
         body: Joi.object<BranchRequestModel>({
             name: Joi.string().required().min(3).messages({
