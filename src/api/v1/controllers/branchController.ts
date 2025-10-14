@@ -3,6 +3,7 @@ import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as branchService from "../services/branchService";
 import { Branch } from "../models/branchModel";
 import { branchSchemas } from "../validation/branchValidation";
+import { successResponse } from "../models/responseModel";
 
 /**
  * Controller to get all branches.
@@ -56,7 +57,7 @@ export const createBranch = async (
         const branch: Branch = value;
 
         await branchService.createBranch({ ...branch });
-        res.status(HTTP_STATUS.OK).json(successResponse{}, "Branch Created");
+        res.status(HTTP_STATUS.OK).json(successResponse("Branch Created"));
     } catch (error: unknown) {
         next(error);
     }
