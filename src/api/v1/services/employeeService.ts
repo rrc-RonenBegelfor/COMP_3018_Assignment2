@@ -71,8 +71,27 @@ export const createEmployee = async (employeeData: {
  * @param id - The ID of the employee to retrieve.
  * @returns A promise that resolves to the Employee object if found, otherwise undefined.
  */
-export const getEmployeeById = async (id: number): Promise<Employee | undefined> => {
-    return employees.find(e => e.id === id);
+export const getEmployeeById = async (id: string): Promise<Employee> => {
+    try {
+        const doc: DocumentSnapshot | null = await getDocumentById(
+            collection,
+            id
+        );
+
+        if (!doc) {
+            throw new Error(`Employee with ID ${id} not found`);
+        }
+
+        const data: DocumentData | undefined = doc.data();
+        const employee: Employee = {
+            id: doc.id,
+            ...data,
+        } as Employee;
+
+        return structuredClone(employee);
+    } catch (error: unknown) {
+        throw error;
+    }
 };
 
 /**
