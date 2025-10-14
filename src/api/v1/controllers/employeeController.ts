@@ -97,9 +97,8 @@ export const getEmployeeById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
- 
-        const employee: Employee | undefined = await employeeService.getEmployeeById(parsedId);
+   
+        const employee: Employee | undefined = await employeeService.getEmployeeById(id);
  
         if (!employee) {
             res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -131,16 +130,21 @@ export const updateEmployee = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
+        
+        const { name, position, department, email, phone, branchId} = req.body;
 
-        const { name, position, department, email, phone, branchId } = req.body;
-
-        const updatedEmployee: Employee = await employeeService.updateEmployee(parsedId, { name, position, department, email, phone, branchId });
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee updated successfully",
-            data: updatedEmployee,
+        const updatedEmployee: Employee = await employeeService.updateEmployee(id, {
+            name,
+            position,
+            department,
+            email,
+            phone,
+            branchId,
         });
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedEmployee, "Employee successfully updated"),
+        );
     } catch (error: unknown) {
         next(error);
     }
@@ -160,17 +164,12 @@ export const deleteEmployee = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const  { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
+        const id: string = req.params.id;
 
-        const deletedEmployee: Employee | undefined = await employeeService.getEmployeeById(parsedId);  
-
-        await employeeService.deleteEmployee(parsedId);       
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Employee deleted successfully",
-            data: deletedEmployee,
-        });
+        await employeeService.deleteEmployee(id);
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Employee successfully deleted")
+        );
     } catch (error: unknown) {
         next(error);
     }
