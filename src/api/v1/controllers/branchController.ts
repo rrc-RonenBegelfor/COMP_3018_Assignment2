@@ -78,9 +78,8 @@ export const getBranchById = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
 
-        const branch: Branch | undefined = await branchService.getBranchById(parsedId);
+        const branch: Branch | undefined = await branchService.getBranchById(id);
 
         if (!branch) {
             res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -112,16 +111,18 @@ export const updateBranch = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
-        const parsedId = parseInt(id, 10);
 
-        const { name, address, phone } = req.body;
+        const { name, address, phone} = req.body;
 
-        const updatedBranch: Branch = await branchService.updateBranch(parsedId, { name, address, phone });
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch updated successfully",
-            data: updatedBranch,
+        const updatedBranch: Branch = await branchService.updateBranch(id, {
+            name,
+            address,
+            phone,
         });
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedBranch, "Branch successfully updated"),
+        );
     } catch (error: unknown) {
         next(error);
     }
@@ -141,17 +142,12 @@ export const deleteBranch = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
-        const parsedId: number = parseInt(id, 10);
+        const id: string = req.params.id;
 
-        const deletedBranch: Branch | undefined = await branchService.getBranchById(parsedId);
-
-        await branchService.deleteBranch(parsedId);
-
-        res.status(HTTP_STATUS.OK).json({
-            message: "Branch deleted successfully",
-            data: deletedBranch,
-        });
+        await branchService.deleteBranch(id);
+        res.status(HTTP_STATUS.OK).json(
+            successResponse("Branch successfully deleted")
+        );
     } catch (error: unknown) {
         next(error);
     }
