@@ -41,8 +41,6 @@ export const getAllEmployees = async (): Promise<Employee[]> => {
  * 
  * @param employeeData - An object containing the details of the employee to be created.
  * @returns A promise that resolves to the newly created Employee object.
- * 
- * Added functionality that helps create a unique ID number using mapping.
  */
 export const createEmployee = async (employeeData: {
     name: string;
@@ -101,6 +99,8 @@ export const getEmployeeById = async (id: string): Promise<Employee> => {
  * @param employeeData - The data to update the employee with
  * @returns - The updated Employee object
  * @throws - An error if the employee with the specified ID is not found
+ * 
+ *  * Added functionality so values which are not listed in the body do not get removed.
  */
 export const updateEmployee = async (
     id: string,
