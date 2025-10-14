@@ -26,7 +26,7 @@ export const getAllEmployees = async (
         let employees: Employee[];
         
         if (typeof department === "string") {
-            employees = await employeeService.getAllEmployeesForDepartment(department);
+            employees = await employeeService.getAllEmployeesForDepartment(department.toLocaleLowerCase());
 
             // Had to add this in so my route test would work properly.
             if (employees.length === 0) {
