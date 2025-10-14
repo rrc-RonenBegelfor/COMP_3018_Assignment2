@@ -52,27 +52,17 @@ export const createEmployee = async (employeeData: {
     phone: string;
     branchId: number;
 }): Promise<Employee> => {
-    const existingIds: Set<number> = new Set(employees.map(e => e.id));
-
-    let uniqueId: number = 1;
-
-    while(existingIds.has(uniqueId)) {
-        uniqueId++;
-    }
-
-    const newEmployee: Employee = {
-        id: uniqueId,
-        name: employeeData.name,
-        position: employeeData.position,
-        department: employeeData.department,
-        email: employeeData.email,
-        phone: employeeData.phone,
-        branchId: employeeData.branchId,
-    };
-
-    employees.push(newEmployee);
-
-    return structuredClone(newEmployee);
+    try {
+            const newEmployee: Partial<Employee> = {
+                ...employeeData,
+            };
+    
+            const employeeId: string = await createDocument<Employee>(collection, newEmployee);
+    
+            return structuredClone({ id: employeeId, ...newEmployee} as Employee);
+        } catch (error: unknown) {
+            throw error;
+        }
 };
 
 /**
