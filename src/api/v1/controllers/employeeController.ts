@@ -28,9 +28,9 @@ export const getAllEmployees = async (
 
             // Had to add this in so my route test would work properly.
             if (employees.length === 0) {
-                res.status(HTTP_STATUS.BAD_REQUEST).json({
+                res.status(HTTP_STATUS.NOT_FOUND).json({
                     department: department,
-                    message: `The department above was not found or does not exist`,
+                    data: [],
                 });
             }
         } else {    

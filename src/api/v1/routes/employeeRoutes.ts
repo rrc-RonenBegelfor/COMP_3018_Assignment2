@@ -8,6 +8,6 @@ router.get("/", employeeController.getAllEmployees);
 router.get("/:id", employeeController.getEmployeeById);
 router.put("/:id", employeeController.updateEmployee);
 router.delete("/:id", employeeController.deleteEmployee);
-router.get("/:branchId/employees", employeeController.getAllEmployeesForBranch);
+router.get("/branch/:branchId", employeeController.getAllEmployeesForBranch);
 
 export default router;
