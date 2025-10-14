@@ -151,14 +151,18 @@ export const updateEmployee = async (
  * @returns - A promise that resolves when the employee is deleted
  * @throws - An error if the employee with the specified ID is not found
  */
-export const deleteEmployee = async (id: number): Promise<void> => {
-    const index: number = employees.findIndex((e: Employee) => e.id === id);
+export const deleteEmployee = async (id: string): Promise<void> => {
+    try {
+        const employee: Employee = await getEmployeeById(id);
 
-    if (index === -1) {
-        throw new Error(`Item with ID ${id} not found`);
+        if (!employee) {
+            throw new Error(`Employee with ${id} not found`);
+        }
+
+        await deleteDocument(collection, id);
+    } catch (error: unknown) {
+        throw error;
     }
-
-    employees.splice(index, 1);
 };
 
 /**
