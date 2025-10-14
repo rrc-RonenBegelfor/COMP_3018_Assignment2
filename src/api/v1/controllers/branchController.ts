@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import * as branchService from "../services/branchService";
 import { Branch } from "../models/branchModel";
+import { branchSchemas } from "../validation/branchValidation";
 
 /**
  * Controller to get all branches.
@@ -41,27 +42,21 @@ export const createBranch = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        if (!req.body.name) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch name is required",
-            });
-        } else if (!req.body.address) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch address is required",
-            });
-        } else if (!req.body.phone) {
-            res.status(HTTP_STATUS.BAD_REQUEST).json({
-                message: "Branch phone is required",
-            });
-        } else {
-            const { name, address, phone} = req.body;
+        const { error, value } = branchSchemas.create.body.validate(req.body, { abortEarly: false});
 
-            const newBranch: Branch = await branchService.createBranch({ name, address, phone});
-            res.status(HTTP_STATUS.CREATED).json({
-                message: "Branch created successfully",
-                data: newBranch,
+        if (error) {
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Validation failed",
+            details: error.details.map(d => d.message),
             });
+            
+            return;
         }
+
+        const branch: Branch = value;
+
+        await branchService.createBranch({ ...branch });
+        res.status(HTTP_STATUS.OK).json(successResponse{}, "Branch Created");
     } catch (error: unknown) {
         next(error);
     }
