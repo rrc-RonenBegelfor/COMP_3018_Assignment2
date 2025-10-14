@@ -139,12 +139,16 @@ export const updateBranch = async (
  * @returns - A promise that resolves when the branch is deleted
  * @throws - An error if the branch with the specified ID is not found
  */
-export const deleteBranch = async (id: number): Promise<void> => {
-    const index: number = branches.findIndex((b: Branch) => b.id === id);
+export const deleteBranch = async (id: string): Promise<void> => {
+    try {
+        const branch: Branch = await getBranchById(id);
 
-    if (index === -1) {
-        throw new Error(`Item with ID ${id} not found`);
+        if (!branch) {
+            throw new Error(`Branch with ${id} not found`);
+        }
+
+        await deleteDocument(collection, id);
+    } catch (error: unknown) {
+        throw error;
     }
-
-    branches.splice(index, 1);
 };
