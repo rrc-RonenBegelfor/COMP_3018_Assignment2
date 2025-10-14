@@ -130,8 +130,19 @@ export const updateEmployee = async (
 ): Promise<void> => {
     try {
         const { id } = req.params;
+
+        const {error, value } = employeeSchemas.update.body.validate(req.body, { abortEarly: false})
         
-        const { name, position, department, email, phone, branchId} = req.body;
+        const { name, position, department, email, phone, branchId} = value;
+
+        if (error) {
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Validation failed",
+            details: error.details.map(d => d.message),
+            });
+            
+            return;
+        }
 
         const updatedEmployee: Employee = await employeeService.updateEmployee(id, {
             name,

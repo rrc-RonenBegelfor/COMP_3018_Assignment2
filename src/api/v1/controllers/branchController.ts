@@ -112,7 +112,18 @@ export const updateBranch = async (
     try {
         const { id } = req.params;
 
-        const { name, address, phone} = req.body;
+        const {error, value } = branchSchemas.update.body.validate(req.body, { abortEarly: false})
+
+        const { name, address, phone} = value;
+
+        if (error) {
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+            message: "Validation failed",
+            details: error.details.map(d => d.message),
+            });
+            
+            return;
+        }
 
         const updatedBranch: Branch = await branchService.updateBranch(id, {
             name,
