@@ -1,0 +1,8 @@
+export interface EmployeeRequestModel {
+    name: string;
+    position: string;
+    department: string;
+    email: string;
+    phone: string;
+    branchId: number;
+};
