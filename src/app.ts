@@ -10,7 +10,7 @@ const app: Express = express();
 
 app.use(express.json());
 app.use(morgan("combined"));
-app.use(logRuquest);
+app.use(logRequest);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({

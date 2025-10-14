@@ -1,5 +1,18 @@
-import { branches} from "../../../data/branches";
+import {
+    QuerySnapshot,
+    DocumentData,
+    DocumentSnapshot,
+} from "firebase-admin/firestore";
 import { Branch } from "../models/branchModel";
+import {
+    createDocument,
+    getDocuments,
+    getDocumentById,
+    updateDocument,
+    deleteDocument,
+} from "../repositories/firestoreRepository";
+
+const collection: string = "branches";
 
 /**
  * Gets all branches.
@@ -7,7 +20,20 @@ import { Branch } from "../models/branchModel";
  * @returns A promise that resolves to an array of Branch objects.
  */
 export const getAllBranches = async (): Promise<Branch[]> => {
-    return structuredClone(branches);
+    try {
+        const snapshot: QuerySnapshot = await getDocuments(collection);
+        const branches: Branch[] = snapshot.docs.map((doc) => {
+            const data: DocumentData = doc.data();
+            return {
+                id: doc.id,
+                ...data,
+            } as Branch;
+        });
+
+        return branches;
+    } catch (error: unknown) {
+        throw error;
+    }
 };
 
 /**
@@ -23,24 +49,17 @@ export const createBranch = async (branchData: {
     address: string;
     phone: string;
 }): Promise<Branch> => {
-    const existingIds: Set<number> = new Set(branches.map(b => b.id));
-    
-    let uniqueId: number = 1;
-    
-    while(existingIds.has(uniqueId)) {
-        uniqueId++;
+    try {
+        const newBranch: Partial<Branch> = {
+            ...branchData,
+        };
+
+        const branchId: string = await createDocument<Branch>(collection, newBranch);
+
+        return structuredClone({ id: branchId, ...newBranch} as Branch);
+    } catch (error: unknown) {
+        throw error;
     }
-
-    const newEmployee: Branch = {
-        id: uniqueId,
-        name: branchData.name,
-        address: branchData.address,
-        phone: branchData.phone,
-    };
-
-    branches.push(newEmployee);
-
-    return structuredClone(newEmployee);
 };
 
 /**
@@ -49,8 +68,27 @@ export const createBranch = async (branchData: {
  * @param id - The ID of the branch to retrieve.
  * @returns A promise that resolves to the Branch object if found, otherwise undefined.
  */
-export const getBranchById = async (id: number): Promise<Branch | undefined> => {
-    return branches.find(b => b.id === id);
+export const getBranchById = async (id: string): Promise<Branch> => {
+    try {
+        const doc: DocumentSnapshot | null = await getDocumentById(
+            collection,
+            id
+        );
+
+        if (!doc) {
+            throw new Error(`Branch with ID ${id} not found`);
+        }
+
+        const data: DocumentData | undefined = doc.data();
+        const branch: Branch = {
+            id: doc.id,
+            ...data,
+        } as Branch;
+
+        return structuredClone(branch);
+    } catch (error: unknown) {
+        throw error;
+    }
 };
 
 /**
@@ -62,21 +100,36 @@ export const getBranchById = async (id: number): Promise<Branch | undefined> => 
  * @throws - An error if the branch with the specified ID is not found
  */
 export const updateBranch = async (
-    id: number,
+    id: string,
     branchData: Pick<Branch, "name" | "address" | "phone">,
 ): Promise<Branch> => {
-    const index: number = branches.findIndex((b: Branch) => b.id === id);
+    try {
+        const branch: Branch = await getBranchById(id);
 
-    if (index === -1) {
-        throw new Error(`Item with ID ${id} not found`);
+        if (!branch) {
+            throw new Error(`Branch with ${id} not found`);
+        }
+
+        const updateBranch: Branch = {
+            ...branch,
+        };
+
+        if (branchData.name !== undefined) {
+            updateBranch.name = branchData.name;
+        }
+        if (branchData.address !== undefined) {
+            updateBranch.address = branchData.address;
+        }
+        if (branchData.phone !== undefined) {
+            updateBranch.phone = branchData.phone;
+        }
+
+        await updateDocument<Branch>(collection, id, updateBranch);
+
+        return structuredClone(updateBranch);
+    } catch (error: unknown) {
+        throw error;
     }
-
-    branches[index] = {
-        ...branches[index],
-        ...branchData,
-    };
-
-    return structuredClone(branches[index]);
 };
 
 /**
