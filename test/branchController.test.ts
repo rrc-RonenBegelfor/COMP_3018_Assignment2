@@ -329,4 +329,39 @@ describe("Branch Controller", () => {
             });
         });
     });
+    describe("Joi branch schema validation", () => {
+        it("should return what is missing", async () => {
+            // Arrange
+            const mockBody = {
+                name: "",
+                address: "Te",
+                phone: "Test",
+            };
+
+            const mockBranch: Branch = {
+                id: "1",
+                ...mockBody
+            };
+
+            mockReq.body = mockBody;
+            (branchService.createBranch as jest.Mock).mockReturnValue(mockBranch);
+
+            // Act
+            await branchController.createBranch(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                details: [
+                    "Branch name cannot be empty",
+                    "Branch address should have a minimum length of 3",
+                ],
+                message: "Validation failed",
+            }); 
+        });
+    });
 });

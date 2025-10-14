@@ -387,4 +387,44 @@ describe("Employee Controller", () => {
             expect(mockNext).toHaveBeenCalledWith(mockError);
         });
     });
+    describe("Joi employee schema validation", () => {
+        it("should return what is missing", async () => {
+            // Arrange
+            const mockBody = {
+                name: "",
+                position: "Te",
+                department: "Test",
+                email: "Test",
+                phone: "",
+                branchId: 1,
+            };
+
+            const mockEmployee: Employee = {
+                id: "1",
+                ...mockBody
+            };
+
+            mockReq.body = mockBody;
+            (employeeService.createEmployee as jest.Mock).mockReturnValue(mockEmployee);
+
+            // Act
+            await employeeController.createEmployee(
+                mockReq as Request,
+                mockRes as Response,
+                mockNext as NextFunction
+            );
+
+            // Assert
+            expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
+            expect(mockRes.json).toHaveBeenCalledWith({
+                details: [
+                    "Employee name cannot be empty",
+                    "Employee position should have a minimum length of 3",
+                    "Employee email must be a valid email",
+                    "Employee phone cannot be empty",
+                ],
+                message: "Validation failed",
+            }); 
+        });
+    });
 });
