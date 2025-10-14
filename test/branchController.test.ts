@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
 import * as branchController from "../src/api/v1/controllers/branchController";
 import * as branchService from "../src/api/v1/services/branchService";
-import { Branch } from "../src/data/branches";
-// import { mock } from "node:test";
+import { Branch } from "../src/api/v1/models/branchModel";
 
 jest.mock("../src/api/v1/services/branchService");
 
@@ -28,7 +27,7 @@ describe("Branch Controller", () => {
             // Arrange
             const mockBranch: Branch[] = [
                 {
-                    id: 1,
+                    id: "1",
                     name: "Test Location",
                     address: "Test Address",
                     phone: "Test Phone"
@@ -80,7 +79,7 @@ describe("Branch Controller", () => {
             };
 
             const mockBranch: Branch = {
-                id: 1,
+                id: "1",
                 ...mockBody
             };
 
@@ -97,8 +96,9 @@ describe("Branch Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch created successfully",
-                data: mockBranch,
+                data: "Branch Created",
+                message: undefined,
+                status: "success",
             });
         });
 
@@ -122,7 +122,8 @@ describe("Branch Controller", () => {
                 // Assert
                 expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
                 expect(mockRes.json).toHaveBeenCalledWith({
-                    message: "Branch name is required",
+                    details: ["Branch name is required",],
+                    message: "Validation failed",
                 });
             });
                 
@@ -145,7 +146,8 @@ describe("Branch Controller", () => {
                 // Assert
                 expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
                 expect(mockRes.json).toHaveBeenCalledWith({
-                    message: "Branch address is required",
+                    details: ["Branch address is required"],
+                    message: "Validation failed",
                 });
             });
 
@@ -168,7 +170,8 @@ describe("Branch Controller", () => {
                 // Assert
                 expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
                 expect(mockRes.json).toHaveBeenCalledWith({
-                    message: "Branch phone is required",
+                    details: ["Branch phone is required"],
+                    message: "Validation failed",
                 });
             }); 
         });
@@ -183,7 +186,7 @@ describe("Branch Controller", () => {
 
             const mockId: string = "1";
             const mockBranch: Branch = {
-                id: 1,
+                id: "1",
                 name: "Test",
                 address: "Test",
                 phone: "Test",
@@ -203,8 +206,14 @@ describe("Branch Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch updated successfully",
-                data: mockBranch,
+                data: {
+                    "address": "Test",
+                    "id": "1",
+                    "name": "Test",
+                    "phone": "Test",
+                },
+                message: "Branch successfully updated",
+                status: "success",
             });
         });
 
@@ -244,8 +253,9 @@ describe("Branch Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Branch deleted successfully",
-                data: undefined,
+                data: "Branch successfully deleted",
+                message: undefined,
+                status: "success",
             });
         });
 
@@ -272,7 +282,7 @@ describe("Branch Controller", () => {
             // Arrange
             const mockId: string = "1";
             const mockBranch: Branch = {
-                id: 1,
+                id: "1",
                 name: "Test",
                 address: "Test",
                 phone: "Test",

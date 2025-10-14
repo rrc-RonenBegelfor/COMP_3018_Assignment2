@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
 import * as employeeService from "../src/api/v1/services/employeeService";
-import { Employee } from "../src/data/employees";
+import { Employee } from "../src/api/v1/models/employeeModel";
 
 jest.mock("../src/api/v1/services/employeeService");
 
@@ -30,7 +30,7 @@ describe("Employee Controller", () => {
             // Arrange
             const mockEmployee: Employee[] = [
                 {
-                    id: 1,
+                    id: "1",
                     name: "Test Name",
                     position: "Test Position",
                     department: "Test Department",
@@ -61,7 +61,7 @@ describe("Employee Controller", () => {
             // Arrange
             const mockEmployee: Employee[] = [
                 {
-                    id: 1,
+                    id: "1",
                     name: "Test Name",
                     position: "Test Position",
                     department: "Test Department",
@@ -115,13 +115,13 @@ describe("Employee Controller", () => {
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
-                email: "Test Email",
+                email: "testemail@gmail.com",
                 phone: "Test Phone",
                 branchId: 1,
             };
 
             const mockEmployee: Employee = {
-                id: 1,
+                id: "1",
                 ...mockBody
             };
 
@@ -138,8 +138,9 @@ describe("Employee Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.CREATED);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Employee created successfully",
-                data: mockEmployee,
+                data: "Employee Created",
+                message: undefined,
+                status: "success",
             });
         });
 
@@ -160,7 +161,15 @@ describe("Employee Controller", () => {
                 // Assert
                 expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.BAD_REQUEST);
                 expect(mockRes.json).toHaveBeenCalledWith({
-                    message: "Employee name is required",
+                    details: [
+                        "Employee name is required",
+                        "Employee position is required",
+                        "Employee department is required",
+                        "Employee email is required",
+                        "Employee phone is required",
+                        "Employee branchId is required",
+                    ],
+                    message: "Validation failed",
                 });
             });
         });
@@ -175,7 +184,7 @@ describe("Employee Controller", () => {
 
             const mockId: string = "1";
             const mockEmployee: Employee = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
@@ -198,8 +207,17 @@ describe("Employee Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Employee updated successfully",
-                data: mockEmployee,
+                data: {
+                    "branchId": 1,
+                    "department": "Test Department",
+                    "email": "Test Email",
+                    "id": "1",
+                    "name": "Test Name",
+                    "phone": "Test Phone",
+                    "position": "Test Position",
+                },
+                message: "Employee successfully updated",
+                status: "success",
             });
         });
 
@@ -239,8 +257,9 @@ describe("Employee Controller", () => {
             // Assert
             expect(mockRes.status).toHaveBeenCalledWith(HTTP_STATUS.OK);
             expect(mockRes.json).toHaveBeenCalledWith({
-                message: "Employee deleted successfully",
-                data: undefined,
+                data: "Employee successfully deleted",
+                message: undefined,
+                status: "success",
             });
         });
 
@@ -267,7 +286,7 @@ describe("Employee Controller", () => {
             // Arrange
             const mockId: string = "1";
             const mockEmployee: Employee = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
@@ -323,7 +342,7 @@ describe("Employee Controller", () => {
             // Arrange
             const mockId: string = "1";
             const mockEmployee: Employee[] = [{
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",

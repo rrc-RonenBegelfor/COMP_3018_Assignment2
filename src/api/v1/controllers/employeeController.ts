@@ -76,7 +76,7 @@ export const createEmployee = async (
         const employee: Employee = value;
 
         await employeeService.createEmployee({ ...employee });
-        res.status(HTTP_STATUS.OK).json(successResponse("Employee Created"));
+        res.status(HTTP_STATUS.CREATED).json(successResponse("Employee Created"));
     } catch (error: unknown) {
         next(error);
     }

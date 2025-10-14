@@ -3,7 +3,7 @@ import response from "supertest";
 import app from "../src/app";
 import * as employeeController from "../src/api/v1/controllers/employeeController";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
-import { Employee } from "../src/data/employees";
+import { Employee } from "../src/api/v1/models/employeeModel";
 
 jest.mock("../src/api/v1/controllers/employeeController", () => ({
     getAllEmployees: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
@@ -46,7 +46,7 @@ describe("Employee Routs", () => {
         it("should call createEmployee controller with valid data", async () => {
             // Arrange
             const mockEmployee: Employee = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",
@@ -79,7 +79,7 @@ describe("Employee Routs", () => {
         it("should call updateEmployee controller with valid data", async () => {
             // Arrange
             const mockEmployeeUpdate: Employee = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 position: "Test Position",
                 department: "Test Department",

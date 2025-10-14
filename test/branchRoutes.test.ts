@@ -3,7 +3,7 @@ import response from "supertest";
 import app from "../src/app";
 import * as branchController from "../src/api/v1/controllers/branchController";
 import { HTTP_STATUS } from "../src/constants/httpConstants";
-import { Branch } from "../src/data/branches";
+import { Branch } from "../src/api/v1/models/branchModel";
 
 jest.mock("../src/api/v1/controllers/branchController", () => ({
     getAllBranches: jest.fn((req, res) => res.status(HTTP_STATUS.OK).send()),
@@ -43,7 +43,7 @@ describe("Branch Routs", () => {
         it("should call createBranch controller with valid data", async () => {
             // Arrange
             const mockBranch: Branch = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 address: "Test Address",
                 phone: "Test Phone",
@@ -72,7 +72,7 @@ describe("Branch Routs", () => {
         it("should call updateBranch controller with valid data", async () => {
             // Arrange
             const mockBranchUpdate: Branch = {
-                id: 1,
+                id: "1",
                 name: "Test Name",
                 address: "Test Address",
                 phone: "Test Phone",

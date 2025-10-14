@@ -57,7 +57,7 @@ export const createBranch = async (
         const branch: Branch = value;
 
         await branchService.createBranch({ ...branch });
-        res.status(HTTP_STATUS.OK).json(successResponse("Branch Created"));
+        res.status(HTTP_STATUS.CREATED).json(successResponse("Branch Created"));
     } catch (error: unknown) {
         next(error);
     }
