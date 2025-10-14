@@ -4,10 +4,13 @@ import express, { Express } from "express";
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
 
+import { logRequest } from "./api/v1/middleware/logRequest";
+
 const app: Express = express();
 
 app.use(express.json());
 app.use(morgan("combined"));
+app.use(logRuquest);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
