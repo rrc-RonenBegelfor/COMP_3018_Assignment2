@@ -19,6 +19,9 @@ app.use(morgan("combined"));
 app.use(logRequest);
 
 const helmetConfig = helmet({
+    /* https://stackoverflow.com/questions/60706823/what-modules-of-helmet-should-i-use-in-my-rest-api
+    *  The creator kind of created this reply, so I just used what made sense from the suggestions and compared with notes.
+    */
     noSniff: true,
 
     hidePoweredBy: true,
@@ -28,7 +31,17 @@ const helmetConfig = helmet({
 });
 
 app.use(helmetConfig);
-app.use(cors());
+
+const corsConfig = cors({
+    // https://expressjs.com/en/resources/middleware/cors.html
+
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+
+    
+});
+
+app.use(corsConfig);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
