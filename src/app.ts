@@ -2,6 +2,7 @@ import morgan from "morgan";
 import express, { Express } from "express";
 
 import dontenv from "dotenv";
+import { helmetConfig } from "../config/helemtConfig";
 import cors from "cors";
 
 dontenv.config();
