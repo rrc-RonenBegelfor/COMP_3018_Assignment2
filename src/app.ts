@@ -37,11 +37,13 @@ const corsConfig = cors({
 
     origin: "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
-
-    
+    allowedHeaders: ["Content-Type", "Authorization"]
 });
 
-app.use(corsConfig);
+const publicCors = cors({
+    origin: "*",
+    methods: ["GET"],
+})
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
@@ -52,7 +54,7 @@ app.get("/api/v1/health", (req, res) => {
     });
 });
 
-app.use("/api/v1/employees", employeeRoutes);
-app.use("/api/v1/branches", branchRoutes);
+app.use("/api/v1/employees", publicCors, employeeRoutes);
+app.use("/api/v1/branches", corsConfig, branchRoutes);
 
 export default app;
