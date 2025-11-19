@@ -3,7 +3,6 @@ import express, { Express } from "express";
 
 import dontenv from "dotenv";
 import { helmetConfig } from "../config/helemtConfig";
-import cors from "cors";
 
 dontenv.config();
 
@@ -19,19 +18,6 @@ app.use(morgan("combined"));
 app.use(logRequest);
 
 app.use(helmetConfig);
-
-const corsConfig = cors({
-    // https://expressjs.com/en/resources/middleware/cors.html
-
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"]
-});
-
-const publicCors = cors({
-    origin: "*",
-    methods: ["GET"],
-})
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
