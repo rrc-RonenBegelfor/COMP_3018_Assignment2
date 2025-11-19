@@ -3,6 +3,7 @@ import express, { Express } from "express";
 
 import dontenv from "dotenv";
 import helmet from "helmet";
+import cors from "cors";
 
 dontenv.config();
 
@@ -27,6 +28,7 @@ const helmetConfig = helmet({
 });
 
 app.use(helmetConfig);
+app.use(cors());
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
