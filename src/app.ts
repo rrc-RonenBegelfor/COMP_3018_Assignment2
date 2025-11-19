@@ -1,5 +1,8 @@
 import morgan from "morgan";
 import express, { Express } from "express";
+import dontenv from "dotenv";
+
+dontenv.config();
 
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
