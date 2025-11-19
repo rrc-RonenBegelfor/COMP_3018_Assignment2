@@ -1,6 +1,8 @@
 import morgan from "morgan";
 import express, { Express } from "express";
+
 import dontenv from "dotenv";
+import helmet from "helmet";
 
 dontenv.config();
 
@@ -14,6 +16,17 @@ const app: Express = express();
 app.use(express.json());
 app.use(morgan("combined"));
 app.use(logRequest);
+
+const helmetConfig = helmet({
+    noSniff: true,
+
+    hidePoweredBy: true,
+
+    referrerPolicy: { policy: "no-referrer" },
+
+});
+
+app.use(helmetConfig);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
