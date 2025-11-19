@@ -1,3 +1,4 @@
 node_modules/
 dist/
 ronen_sdk.json
+.env
