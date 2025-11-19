@@ -1,9 +1,90 @@
 import Joi, { ObjectSchema } from "joi";
 import { EmployeeRequestModel } from "../models/employeeRequestModel";
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     EmployeeRequest:
+ *       type: object
+ *       required:
+ *         - name
+ *         - position
+ *         - department
+ *         - email
+ *         - phone
+ *         - branchId
+ *       properties:
+ *         name:
+ *           type: string
+ *           minLength: 3
+ *           description: Full name of the employee
+ *           example: "John Smith"
+ *         position:
+ *           type: string
+ *           minLength: 3
+ *           description: Job position of the employee
+ *           example: "Senior Developer"
+ *         department:
+ *           type: string
+ *           minLength: 3
+ *           description: Department of the employee
+ *           example: "Engineering"
+ *         email:
+ *           type: string
+ *           format: email
+ *           description: Email address of the employee
+ *           example: "john.smith@company.com"
+ *         phone:
+ *           type: string
+ *           minLength: 3
+ *           description: Phone number of the employee
+ *           example: "+1-555-0123"
+ *         branchId:
+ *           type: number
+ *           description: ID of the branch the employee belongs to
+ *           example: 1
+ *     Employee:
+ *       allOf:
+ *         - $ref: '#/components/schemas/EmployeeRequest'
+ *         - type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *               description: Unique identifier for the employee
+ *               example: "emp_123abc"
+ *           required:
+ *             - id
+ *     ValidationError:
+ *       type: object
+ *       required:
+ *         - error
+ *         - message
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: Error type or code
+ *           example: "VALIDATION_ERROR"
+ *         message:
+ *           type: string
+ *           description: Human-readable error message
+ *           example: "Validation failed"
+ *         details:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               field:
+ *                 type: string
+ *                 example: "email"
+ *               issue:
+ *                 type: string
+ *                 example: "Employee email must be a valid email"
+ *           description: Detailed validation errors
+ */
 export const employeeSchemas: {
-  create: {
-    body: ObjectSchema<EmployeeRequestModel>;
+    create: {
+        body: ObjectSchema<EmployeeRequestModel>;
     };
     update: {
             body: ObjectSchema<EmployeeRequestModel>;

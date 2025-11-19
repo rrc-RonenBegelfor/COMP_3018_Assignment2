@@ -1,6 +1,70 @@
 import Joi, { ObjectSchema } from "joi";
 import { BranchRequestModel } from "../models/branchRequestModel";
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     BranchRequest:
+ *       type: object
+ *       required:
+ *         - name
+ *         - address
+ *         - phone
+ *       properties:
+ *         name:
+ *           type: string
+ *           minLength: 3
+ *           description: Name of the branch
+ *           example: "Toronto Branch"
+ *         address:
+ *           type: string
+ *           minLength: 3
+ *           description: Physical address of the branch
+ *           example: "440 Queen St W, Toronto, ON, M5V 2A8"
+ *         phone:
+ *           type: string
+ *           minLength: 3
+ *           description: Phone number of the branch
+ *           example: "+1-416-980-2500"
+ *     Branch:
+ *       allOf:
+ *         - $ref: '#/components/schemas/BranchRequest'
+ *         - type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *               description: Unique identifier for the branch
+ *               example: "branch_456def"
+ *           required:
+ *             - id
+ *     ValidationError:
+ *       type: object
+ *       required:
+ *         - error
+ *         - message
+ *       properties:
+ *         error:
+ *           type: string
+ *           description: Error type or code
+ *           example: "VALIDATION_ERROR"
+ *         message:
+ *           type: string
+ *           description: Human-readable error message
+ *           example: "Validation failed"
+ *         details:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               field:
+ *                 type: string
+ *                 example: "address"
+ *               issue:
+ *                 type: string
+ *                 example: "Branch address should have a minimum length of 3"
+ *           description: Detailed validation errors
+ */
 export const branchSchemas: {
     create: {
         body: ObjectSchema<BranchRequestModel>;
