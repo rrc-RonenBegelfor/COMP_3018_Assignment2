@@ -1,5 +1,6 @@
 import morgan from "morgan";
 import express, { Express } from "express";
+import setupSwagger from "../config/swagger";
 
 import dontenv from "dotenv";
 import { helmetConfig } from "../config/helemtConfig";
@@ -19,6 +20,7 @@ app.use(morgan("combined"));
 app.use(logRequest);
 
 app.use(helmetConfig);
+setupSwagger(app);
 
 app.get("/api/v1/health", (req, res) => {
     res.json({
