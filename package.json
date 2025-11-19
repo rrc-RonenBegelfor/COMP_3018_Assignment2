@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/rrc-RonenBegelfor/COMP_3018_Assignment2#readme",
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/jest": "^30.0.0",
     "@types/morgan": "^1.9.10",
     "@types/node": "^24.6.0",
