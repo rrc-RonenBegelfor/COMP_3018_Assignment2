@@ -151,6 +151,15 @@ describe("Employee Routs", () => {
         });
     });
 
+    
+    describe("Test", () => {
+        it("Test", async () => {
+            await request(app).get("/api/v1/employees/branch/1");
+
+            expect(employeeController.getAllEmployeesForBranch).toHaveBeenCalled();
+        });
+    });
+
     describe("GET /api/v1/employees?department=", () => {
         it("should call getAllEmployees controller has a department query", async () => {
             // Arrange

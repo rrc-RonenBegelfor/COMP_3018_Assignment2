@@ -220,6 +220,10 @@ describe("Branch Controller", () => {
         it("should handle an error while also calling next", async () => {
             // Arrange
             const mockError: Error = new Error("Mock error");
+            mockReq.params = {id: "1"};
+            mockReq.body = {
+                name: "Test"
+            };
 
             (branchService.updateBranch as jest.Mock).mockRejectedValue(mockError);
 

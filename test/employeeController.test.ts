@@ -224,14 +224,18 @@ describe("Employee Controller", () => {
         it("should handle an error while also calling next", async () => {
             // Arrange
             const mockError: Error = new Error("Mock error");
-
+            mockReq.params = { id: "1"};
+            mockReq.body = {
+                name: "Test"
+            };
+            
             (employeeService.updateEmployee as jest.Mock).mockRejectedValue(mockError);
 
             // Act
             await employeeController.updateEmployee(
                 mockReq as Request,
                 mockRes as Response,
-                mockNext as NextFunction
+                mockNext
             );
 
             // Assert
