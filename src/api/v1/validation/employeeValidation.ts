@@ -81,6 +81,28 @@ import { EmployeeRequestModel } from "../models/employeeRequestModel";
  *                 type: string
  *                 example: "Employee email must be a valid email"
  *           description: Detailed validation errors
+ *     ApiResponse:
+ *       type: object
+ *       required:
+ *         - status
+ *       properties:
+ *         status:
+ *           type: string
+ *           enum: [success, error]
+ *           description: Status of the API response
+ *           example: "success"
+ *         data:
+ *           description: Response data (employee object or array)
+ *         message:
+ *           type: string
+ *           description: Success message
+ *           example: "Employee created successfully"
+ *         error:
+ *           type: string
+ *           description: Error message
+ *         code:
+ *           type: string
+ *           description: Error code
  */
 export const employeeSchemas: {
     create: {
