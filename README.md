@@ -2,12 +2,6 @@
 
 This porject was developed in a hope of creating a working API which manages employees and branches collections. The API uses firebase databases to store and call it's data from. For both the collections, you can get all instances or get them one by id. You can create an instance for each, update one, or delete one.
 
-<style>
-    td, th {
-        border: solid;
-    }
-</style>
-
 ## Installation Instructions
 
 In this section I would go over the prerequisites for the project and then the setup steps.
