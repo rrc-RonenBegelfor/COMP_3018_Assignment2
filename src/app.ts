@@ -1,5 +1,12 @@
 import morgan from "morgan";
 import express, { Express } from "express";
+import setupSwagger from "../config/swagger";
+
+import dontenv from "dotenv";
+import { helmetConfig } from "../config/helemtConfig";
+import { publicCors, corsConfig } from "../config/corsConfig";
+
+dontenv.config();
 
 import employeeRoutes from "./api/v1/routes/employeeRoutes";
 import branchRoutes from "./api/v1/routes/branchRoutes";
@@ -12,6 +19,9 @@ app.use(express.json());
 app.use(morgan("combined"));
 app.use(logRequest);
 
+app.use(helmetConfig);
+setupSwagger(app);
+
 app.get("/api/v1/health", (req, res) => {
     res.json({
         status: "OK",
@@ -21,7 +31,7 @@ app.get("/api/v1/health", (req, res) => {
     });
 });
 
-app.use("/api/v1/employees", employeeRoutes);
-app.use("/api/v1/branches", branchRoutes);
+app.use("/api/v1/employees", publicCors, employeeRoutes);
+app.use("/api/v1/branches", corsConfig, branchRoutes);
 
 export default app;
