@@ -1,6 +1,6 @@
 # Project Overview
 
-This porject was developed in a hope of creating a working API which manages employees and branches collections. The API uses firebase databases to store and call it's data from. For both the collections, you can get all instances or get them one by id. You can create an instance for each, update one, or delete one.
+This project was developed in a hope of creating a working API which manages employees and branches collections. The API uses firebase databases to store and call it's data from. For both the collections, you can get all instances or get them one by id. You can create an instance for each, update one, or delete one.
 
 ## Installation Instructions
 
@@ -107,7 +107,7 @@ It is recommended to get `Postman` or installing `Postman CLI`.
 
     Example of a valid body:
 
-    ```json
+    ```yaml
     {    
         "name": "John Doe",
         "position": "Manager",
@@ -141,7 +141,7 @@ It is recommended to get `Postman` or installing `Postman CLI`.
 
     Example of a valid body:
 
-    ```json
+    ```yaml
     {    
         "name": "John Doe",
         "position": "Manager",
@@ -151,7 +151,7 @@ It is recommended to get `Postman` or installing `Postman CLI`.
         "branchId": 1
     }
 
-    // or
+    # or
 
     {    
         "email": "john@example.com",
@@ -206,7 +206,7 @@ It is recommended to get `Postman` or installing `Postman CLI`.
     | address | string | Address position |
     | phone | string | Phone number |
 
-    ```json
+    ```yaml
     {    
         "name": "IT Ops",
         "address": "123 exampleaddress road",
@@ -234,14 +234,14 @@ It is recommended to get `Postman` or installing `Postman CLI`.
 
     Example of a valid body:
 
-    ```json
+    ```yaml
     {    
         "name": "IT Ops",
         "address": "123 example road",
         "phone": "+1234567890"
     }
 
-    // or
+    # or
 
     {    
         "phone": "+1234567890"
@@ -258,7 +258,7 @@ It is recommended to get `Postman` or installing `Postman CLI`.
 
 ## Public Documentation
 
-If you would like to access the public documentation to this project. You can do so here <[Public Documentation](https://rrc-ronenbegelfor.github.io/COMP_3018_Assignment2/)>.
+If you would like to access the public documentation to this project. You can do so here [Public Documentation](https://rrc-ronenbegelfor.github.io/COMP_3018_Assignment2/).
 
 ## Local Documenation
 
@@ -274,7 +274,7 @@ If you would like to access the local documentation to this project, you can do 
     npm run start
     ```
 
-- Open this link <[Swagger UI](http://localhost:3000/api-docs/)>.
+- Open this link [Swagger UI](http://localhost:3000/api-docs/).
 
 ## Security Configuration
 
@@ -294,7 +294,7 @@ First, what they are and what they focus on:
 
 1. Helmet
 
-    ```json
+    ```yaml
     noSniff: true,
 
     hidePoweredBy: true,
@@ -315,7 +315,7 @@ First, what they are and what they focus on:
 
     - Public CORS Code
 
-        ```json
+        ```yaml
         origin: "*",
         methods: ["GET"],
         ```
@@ -328,10 +328,10 @@ First, what they are and what they focus on:
 
     - Private CORS Code
 
-        ```json
-            origin: "http://localhost:3000",
-            methods: ["GET", "POST", "PUT", "DELETE"],
-            allowedHeaders: ["Content-Type", "Authorization"]
+        ```yaml
+        origin: "http://localhost:3000",
+        methods: ["GET", "POST", "PUT", "DELETE"],
+        allowedHeaders: ["Content-Type", "Authorization"]
         ```
 
         This CORS is used on the branches collection.
@@ -352,7 +352,7 @@ To start the setup of your secure environment variables, you need to ensure you 
 
 `.env` example with Firebase:
 
-```json
+```env
 FIREBASE_PROJECT_ID=your_project_id_here
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nREPLACE_WITH_KEY\n-----END PRIVATE KEY-----\n"
 FIREBASE_CLIENT_EMAIL=your_client_email_here
@@ -375,7 +375,7 @@ These are all the credentials your Firebase would need for you to access it's se
 
 For this project you'd need just the following envrionment variables.
 
-```json
+```env
 FIREBASE_PROJECT_ID=your_project_id_here
 FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nREPLACE_WITH_KEY\n-----END PRIVATE KEY-----\n"
 FIREBASE_CLIENT_EMAIL=your_client_email_here
